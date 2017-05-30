@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:padding="6dp"
+    android:paddingRight="5dp"
+    android:paddingStart="5dp"
+    android:background="@color/button_material_light"
+    android:alpha="0.7">
+    <LinearLayout
+        android:id="@+id/TextLayout"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <TextView
+            android:id="@+id/modal_color_content"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="#565b57"
+            android:textSize="14dip"
+            android:textAlignment="center"
+            android:text="Change star color or back color using buttons or slide. Got it?"/>
+    </LinearLayout>
+</RelativeLayout>

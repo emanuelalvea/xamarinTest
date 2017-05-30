@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:minWidth="25px"
+    android:minHeight="25px"
+    android:keepScreenOn="true">
+    <include
+        android:id="@+id/toolbar"
+        layout="@layout/toolbar" />
+    <android.support.v4.widget.DrawerLayout
+        android:id="@+id/drawerLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="fill"
+            android:id="@+id/backLayout">
+            <ImageView
+                android:layout_width="20.5dp"
+                android:layout_height="20.0dp"
+                android:id="@+id/imageView"
+                android:src="@drawable/star"
+                android:tint="?android:attr/colorPrimary"
+                android:layout_gravity="center"
+                android:scaleType="fitStart"
+                android:fadingEdge="horizontal"
+                android:requiresFadingEdge="horizontal"
+                android:layout_marginBottom="50dp"
+                android:layout_marginTop="50dp"
+                android:layout_centerInParent="false"
+                android:layout_centerVertical="true"
+                android:layout_centerHorizontal="true"
+                android:background="@color/design_textinput_error_color_dark"
+                android:backgroundTint="#00000000" />
+            <FrameLayout
+                android:minWidth="75px"
+                android:minHeight="75px"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/frameLayout2"
+                android:layout_marginTop="400dp"
+                android:visibility="invisible">
+                <Button
+                    android:text="Start"
+                    android:id="@+id/btnAni"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="fill_horizontal"
+                    android:alpha="0.5" />
+                <Button
+                    android:text="STOP"
+                    android:id="@+id/stop"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="right"
+                    android:alpha="0.5" />
+            </FrameLayout>
+        </RelativeLayout>
+        <ListView
+            android:id="@+id/menu_frente"
+            android:layout_width="100dp"
+            android:layout_height="match_parent"
+            android:layout_gravity="start"
+            android:choiceMode="singleChoice"
+            android:divider="#eff7ff"
+            android:dividerHeight="2dp"
+            android:background="#bac4bd" />
+        <ListView
+            android:id="@+id/menu_fondo"
+            android:layout_width="100dp"
+            android:layout_height="match_parent"
+            android:layout_gravity="right"
+            android:choiceMode="singleChoice"
+            android:divider="#eff7ff"
+            android:dividerHeight="1dp"
+            android:background="#bac4bd" />
+    </android.support.v4.widget.DrawerLayout>
+</LinearLayout>

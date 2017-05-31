@@ -1,6 +1,0 @@
-<RelativeLayout android:layout_width="fill_parent" android:layout_height="wrap_content" android:padding="15dp" android:paddingRight="5dp" android:paddingStart="5dp" xmlns:android="http://schemas.android.com/apk/res/android"><LinearLayout android:id="@+id/Text" android:orientation="vertical" android:layout_width="match_parent" android:layout_height="wrap_content"><TextView android:id="@+id/Text1" android:layout_width="wrap_content" android:layout_height="wrap_content" android:textColor="#344f37" android:textSize="25dip" /></LinearLayout><!--<ImageView
-        android:id="@+id/Image"
-        android:layout_width="40dp"
-        android:layout_height="40dp"
-        android:src="@drawable/star"
-        android:layout_alignParentRight="true" />--></RelativeLayout>

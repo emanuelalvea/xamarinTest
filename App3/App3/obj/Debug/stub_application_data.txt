@@ -1,2 +1,0 @@
-android.app.Application
-App3.App3

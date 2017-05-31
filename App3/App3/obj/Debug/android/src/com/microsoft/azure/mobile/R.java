@@ -3290,6 +3290,10 @@ containing a value of this type.
         public static final int ApplicationName=0x7f09003f;
         public static final int Hello=0x7f09003e;
         public static final int StarColorInit=0x7f090040;
+        public static final int UserGuideButtonOk=0x7f090044;
+        public static final int UserGuideColorMessage=0x7f090042;
+        public static final int UserGuideMessage=0x7f090043;
+        public static final int UserGuideTitle=0x7f090041;
         public static final int abc_action_bar_home_description=0x7f090015;
         public static final int abc_action_bar_home_description_format=0x7f090016;
         public static final int abc_action_bar_home_subtitle_description_format=0x7f090017;

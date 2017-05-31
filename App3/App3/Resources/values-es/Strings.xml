@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="Hello">Hello World, Click Me!</string>
+    <string name="ApplicationName">App3</string>
+  <string name="StarColorInit">#37bf8f</string>
+  <string name="UserGuideTitle">Guia usuario</string>
+  <string name="UserGuideColorMessage">Puede elegir el color de la estrella o de el fondo desde los botones en el menu o deslizando desde los bordes</string>
+  <string name="UserGuideMessage">El movimiento nunca se detiene, mueve tu telefono y la estrella seguira tu ritmo!</string>
+  <string name="UserGuideButtonOk">Entendido</string>
+</resources>

@@ -2,11 +2,8 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
     android:layout_height="wrap_content"
-    android:padding="6dp"
-    android:paddingRight="5dp"
-    android:paddingStart="5dp"
-    android:background="@color/button_material_light"
-    android:alpha="0.7">
+    android:alpha="0.7"
+    style="@style/AlertDialog.AppCompat.Light">
     <LinearLayout
         android:id="@+id/TextLayout"
         android:orientation="vertical"
@@ -19,6 +16,7 @@
             android:textColor="#565b57"
             android:textSize="14dip"
             android:textAlignment="center"
-            android:text="Change star color or back color using buttons or slide. Got it?"/>
+            android:text="Change star color or back color using buttons or slide. Got it?"
+            style="@style/AlertDialog.AppCompat.Light" />
     </LinearLayout>
 </RelativeLayout>

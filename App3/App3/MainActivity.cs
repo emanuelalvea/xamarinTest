@@ -44,6 +44,7 @@ namespace App3
         string starColorValue;
         string backColorValue;
         private const string ColorPrimary = "#37bf8f";
+        Action hideToolBarAction;
 
         protected override void OnCreate(Bundle bundle)
         {
@@ -98,19 +99,33 @@ namespace App3
             var btnAni = FindViewById<Button>(Resource.Id.btnAni);
             var btnStop = FindViewById<Button>(Resource.Id.stop);
 
+            hideToolBarAction = () =>
+           {
+               if (drawerLayout.IsDrawerOpen(sideBarFrente) || drawerLayout.IsDrawerOpen(sideBarFondo))
+               {
+                   return;
+               }
+               _toolbar.Alpha = .1f;
+               _toolbar.Visibility = ViewStates.Gone;
+           };
+
             objAnim = ObjectAnimator.OfPropertyValuesHolder(_imageView, PropertyValuesHolder.OfFloat("scaleX", 80.5f), PropertyValuesHolder.OfFloat("scaleY", 75.5f));
 
-   
+
             //editor.PutString("StarColor", value.Data.ToString());
             //editor.PutString("BackColor", "#ffffff");
             //editor.Commit();
             int colorBack = Color.White;
             int colorStar = Color.ParseColor(ColorPrimary);
+           
             ISharedPreferences preferences = PreferenceManager.GetDefaultSharedPreferences(this);
+
+            preferences.Edit().Clear().Apply();
+            
             starColorValue = preferences.GetString("StarColor", colorStar.ToString());
             backColorValue = preferences.GetString("BackColor", colorBack.ToString());
 
-            
+
             _imageView.SetColorFilter(new Color(int.Parse(starColorValue)));
             _imageView.SetBackgroundColor(new Color(int.Parse(backColorValue)));
             drawerLayout.SetBackgroundColor(new Color(int.Parse(backColorValue)));
@@ -135,12 +150,8 @@ namespace App3
 
             };
 
-            Action myAction = () =>
-            {
-                _toolbar.Alpha = .1f;
-                _toolbar.Visibility = ViewStates.Gone;
-            };
-            drawerLayout.PostDelayed(myAction, 8000);
+
+            // drawerLayout.PostDelayed(hideToolBarAction, 8000);
 
             CrossDeviceMotion.Current.SensorValueChanged += (s, a) =>
             {
@@ -150,7 +161,7 @@ namespace App3
                 mAccelLast = mAccelCurrent;
                 mAccelCurrent = (float)Math.Sqrt((double)(x * x + y * y + z * z));
                 //previousSensorValue = previousSensorValue == null ? (MotionVector)a.Value : previousSensorValue;
-              
+
                 float delta = mAccelCurrent - mAccelLast;
                 mAccel = mAccel * 0.9f + delta;
 
@@ -176,26 +187,37 @@ namespace App3
             windowManagerLayoutParams.ScreenBrightness = 1f; //set screen to full brightness
             Window.Attributes = windowManagerLayoutParams;
 
-            var alert = new AlertDialog.Builder(this);
-            alert.SetView(LayoutInflater.Inflate(Resource.Layout.ModalColor, null));
-            alert.SetTitle("User Guide");
-            alert.SetNegativeButton("Ok", delegate {
-                
+            var IsFirstTime = preferences.GetBoolean("IsFirstTime", true);
 
-                alert.Dispose();
-                drawerLayout.OpenDrawer(sideBarFrente);
+           
+                var alert = new AlertDialog.Builder(this);
+                // alert.SetView(LayoutInflater.Inflate(Resource.Layout.ModalColor, null));
+                alert.SetTitle(Resource.String.UserGuideTitle);
+                alert.SetMessage(Resource.String.UserGuideMessage);
+                alert.SetNegativeButton(Resource.String.UserGuideButtonOk, delegate
+                {
 
-            });
-            
+                    alert.Dispose();
+                });
 
-            alert.SetOnDismissListener(new OnDismissListener(() =>
+
+                alert.SetOnDismissListener(new OnDismissListener(() =>
+                {
+                    // just in case the user pressed the back button
+                    ISharedPreferencesEditor editor = PreferenceManager.GetDefaultSharedPreferences(this).Edit();
+                    editor.PutBoolean("IsFirstTime", false);
+                    editor.Commit();
+                    pulseAnimation();
+                }));
+
+            if (IsFirstTime)
             {
-                // just in case the user pressed the back button
+                alert.Create().Show();
+            }
+            else
+            {
                 pulseAnimation();
-            }));
-
-            alert.Create().Show();
-
+            }
 
             CrossDeviceMotion.Current.Start(DeviceMotion.Plugin.Abstractions.MotionSensorType.Accelerometer);
 
@@ -251,26 +273,20 @@ namespace App3
 
         public override bool OnCreateOptionsMenu(IMenu menu)
         {
-            
+
 
             MenuInflater.Inflate(Resource.Layout.top_menu, menu);
-            
-            
+
+
             return base.OnCreateOptionsMenu(menu);
         }
 
         public override bool OnOptionsItemSelected(IMenuItem item)
         {
-            //Toast.MakeText(this, item.TitleFormatted,
-            //    ToastLength.Short).Show();
-
-            //PopupWindow modal = new PopupWindow(LayoutInflater.Inflate(Resource.Layout.ModalColor, null), LayoutParams.MatchParent, LayoutParams.WrapContent, true);
-            //modal.AttachedInDecor = true;
-            //modal.ShowAtLocation(drawerLayout, GravityFlags.Top, 90, 260);
-
             if (drawerLayout.IsDrawerOpen(sideBarFondo))
             {
                 drawerLayout.CloseDrawer(sideBarFondo);
+                drawerLayout.RemoveCallbacks(hideToolBarAction);
                 return base.OnOptionsItemSelected(item);
             }
 
@@ -279,6 +295,8 @@ namespace App3
                 pulseAnimation();
 
                 drawerLayout.CloseDrawer(sideBarFrente);
+                //drawerLayout.RemoveCallbacks(hideToolBarAction);
+
                 return base.OnOptionsItemSelected(item);
             }
 
@@ -289,6 +307,33 @@ namespace App3
             else
             {
                 drawerLayout.OpenDrawer(sideBarFrente);
+            }
+
+            ISharedPreferences preferences = PreferenceManager.GetDefaultSharedPreferences(this);
+
+            var IsFirstTimeColor = preferences.GetBoolean("IsFirstTimeColor", true);
+
+
+            var alertColor = new AlertDialog.Builder(this);
+            alertColor.SetTitle(Resource.String.UserGuideTitle);
+            alertColor.SetMessage(Resource.String.UserGuideColorMessage);
+            alertColor.SetNegativeButton(Resource.String.UserGuideButtonOk, delegate
+            {
+                alertColor.Dispose();
+            });
+
+
+            alertColor.SetOnDismissListener(new OnDismissListener(() =>
+            {
+                // just in case the user pressed the back button
+                ISharedPreferencesEditor editor = PreferenceManager.GetDefaultSharedPreferences(this).Edit();
+                editor.PutBoolean("IsFirstTimeColor", false);
+                editor.Commit();
+            }));
+
+            if (IsFirstTimeColor)
+            {
+                alertColor.Create().Show();
             }
 
             return base.OnOptionsItemSelected(item);
@@ -336,6 +381,7 @@ namespace App3
             editor.Commit();
 
             drawerLayout.CloseDrawer(listView);
+            drawerLayout.PostDelayed(hideToolBarAction, 6000);
 
         }
 
@@ -349,24 +395,9 @@ namespace App3
         public bool OnTouch(View v, MotionEvent e)
         {
 
-
-            
-
-
-            Action myAction = () =>
-            {
-                if (drawerLayout.IsDrawerOpen(sideBarFrente) || drawerLayout.IsDrawerOpen(sideBarFondo))
-                {
-                    return;
-                }
-                _toolbar.Alpha = .1f;
-                _toolbar.Visibility = ViewStates.Gone;
-            };
-
             if (_toolbar.IsShown)
             {
-                v.RemoveCallbacks(myAction);
-
+                v.RemoveCallbacks(hideToolBarAction);
 
             }
 
@@ -381,7 +412,7 @@ namespace App3
             _toolbar.Alpha = 1f;
             _toolbar.Visibility = ViewStates.Visible;
 
-            v.PostDelayed(myAction, 5000);
+            v.PostDelayed(hideToolBarAction, 5000);
 
 
 

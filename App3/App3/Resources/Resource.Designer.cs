@@ -3694,6 +3694,18 @@ namespace App3
 			// aapt resource value: 0x7f090040
 			public const int StarColorInit = 2131296320;
 			
+			// aapt resource value: 0x7f090044
+			public const int UserGuideButtonOk = 2131296324;
+			
+			// aapt resource value: 0x7f090042
+			public const int UserGuideColorMessage = 2131296322;
+			
+			// aapt resource value: 0x7f090043
+			public const int UserGuideMessage = 2131296323;
+			
+			// aapt resource value: 0x7f090041
+			public const int UserGuideTitle = 2131296321;
+			
 			// aapt resource value: 0x7f090015
 			public const int abc_action_bar_home_description = 2131296277;
 			
